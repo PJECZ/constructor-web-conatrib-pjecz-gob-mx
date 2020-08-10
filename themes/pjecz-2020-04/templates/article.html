@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} - {{ SITENAME }}{% endblock %}
+
+{% block meta_tags %}
+    <meta name="description" content="{{ article.summary|striptags }}">
+    <meta name="keywords" content="{{ [article.tags|join(', '), article.category]|join(', ') }}">
+    <meta name="author" content="{{ article.author.name }}">
+{% endblock %}
+
+{% block header %}
+    <!-- Encabezado -->
+    <header class="py-2">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-lg-12">
+                    <h1 class="display-4 mt-5 mb-2">{{ article.title }}</h1>
+                    {% if article.summary|striptags != '.' %}<p class="lead mb-5">{{ article.summary|striptags }}</p>{% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- Contenido -->
+    <article>
+        <div class="container py-4">
+{{ article.content }}
+            <p class="text-right text-muted">{{ article.date|strftime('%d %B %Y') }}</p>
+        </div>
+    </article>
+    <!-- Compartir en redes sociales -->
+    <div class="container py-4">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>
+        <div class="fb-share-button" data-href="{{ SITEURL }}/{{ output_file }}" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
+    </div>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v6.0"></script>
+{% endblock %}

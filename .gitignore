@@ -1,0 +1,14 @@
+.directory
+.~lock.*
+*.egg-info
+*.pyc
+__pycache__
+*.doc
+*.docx
+*.pdf
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.zip
+output

@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITENAME }}{% endblock %}
+
+{% block meta_tags %}
+    <meta name="description" content="{{ SITEDESCRIPTION }}">
+    <meta name="keywords" content="{{ SITEKEYWORDS }}">
+    <meta name="author" content="{{ AUTHOR }}">
+    <!-- Facebook open graph configuration -->
+    <meta property="og:title" content="{{ SITENAME }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ SITEURL }}/{{ output_file }}">
+    <meta property="og:description" content="{{ SITEDESCRIPTION }}">
+    <meta property="og:site_name" content="{{ SITENAME }}">
+    <meta property="og:image" content="{{ SITELOGO }}">
+    <!-- Twitter card configuration -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="{{ SITETWITTER }}">
+    <meta name="twitter:title" content="{{ SITENAME }}">
+    <meta name="twitter:description" content="{{ SITEDESCRIPTION }}">
+    <meta name="twitter:image" content="{{ SITELOGO }}">
+    <!-- schema.org metadata -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "url": "{{ SITEURL }}",
+        "name": "{{ SITENAME }}",
+        "description": "{{ SITEDESCRIPTION }}"
+    }
+    </script>
+{% endblock %}
+
+{% block header %}
+    <!-- Encabezado -->
+    <header class="py-2">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-lg-12">
+                    <h1 class="display-4 mt-5 mb-2">{{ SITENAME }}</h1>
+                    <p class="lead mb-5">{{ SITEDESCRIPTION }}</p>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- Contenido -->
+    <main>
+{% if output_file == 'index.html' %}
+{%   include 'inicial-cabecera.html' %}
+{#   include 'inicial-destacados.html' #}
+{%   include 'inicial-transmisiones-sesiones.html' %}
+        <!-- Inicial Novedades (Twitter y Noticias) -->
+        <section id="novedades">
+            <div class="container pt-4 pb-2">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="text-center">Red Social Twitter</h3>
+                        <a class="twitter-timeline" data-height="800" href="https://twitter.com/PJCoah?ref_src=twsrc%5Etfw">Tweets by PJCoah</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="text-center">Noticias y eventos</h3>
+{%   for article in articles_page.object_list %}
+                        <h5><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h5>
+                        {% if article.summary|striptags != '.' %}{{ article.summary }}{% endif %}
+{%   endfor %}
+{%   if articles_page %}
+                        <nav>
+                            <ul class="pagination justify-content-center">
+{%     if articles_page.has_previous() %}
+                                <li class="page-item">
+{%       if articles_page.previous_page_number() == 1 %}
+                                    <a class="page-link" aria-label="Previous" href="/{{ page_name }}.html">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Anterior</span>
+                                    </a>
+{%       else %}
+                                    <a class="page-link movimientolibre-page-link" aria-label="Previous" href="/{{ page_name }}{{ articles_page.previous_page_number() }}.html">
+                                        &#60;&#60;
+                                    </a>
+{%       endif %}
+                                </li>
+{%     endif %}
+{%     for page_number in range(1, 1 + articles_paginator.num_pages) %}
+{%       if (page_number - articles_page.number < 3) and (page_number - articles_page.number > -3) %}
+                                <li class="page-item">
+                                    <a class="page-link" href="/{{ page_name }}{{ page_number if page_number > 1 else '' }}.html">{{ page_number }}</a>
+                                </li>
+{%       endif %}
+{%     endfor %}
+{%     if articles_page.has_next() %}
+                                <li class="page-item">
+                                    <a class="page-link" aria-label="Next" href="/{{ page_name }}{{ articles_page.next_page_number() }}.html">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Siguiente</span>
+                                    </a>
+                                </li>
+{%     endif %}
+                            </ul>
+                        </nav>
+{%   endif%}
+                    </div>
+                </div>
+            </div>
+        </section>
+{#   include 'inicial-recomendaciones.html' #}
+{%   include 'inicial-sitios-interes.html' %}
+{% else %}
+        <!-- Inicial Novedades (Noticias) -->
+        <section id="novedades">
+            <div class="container pt-4 pb-2">
+                <h3 class="text-center">Noticias y eventos</h3>
+{%   for article in articles_page.object_list %}
+                <h5><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h5>
+                {% if article.summary|striptags != '.' %}{{ article.summary }}{% endif %}
+{%   endfor %}
+{%   if articles_page %}
+                <nav>
+                    <ul class="pagination justify-content-center">
+{%     if articles_page.has_previous() %}
+                        <li class="page-item">
+{%       if articles_page.previous_page_number() == 1 %}
+                            <a class="page-link" aria-label="Previous" href="/{{ page_name }}.html">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+{%       else %}
+                            <a class="page-link movimientolibre-page-link" aria-label="Previous" href="/{{ page_name }}{{ articles_page.previous_page_number() }}.html">
+                                &#60;&#60;
+                            </a>
+{%       endif %}
+                        </li>
+{%     endif %}
+{%     for page_number in range(1, 1 + articles_paginator.num_pages) %}
+{%       if (page_number - articles_page.number < 3) and (page_number - articles_page.number > -3) %}
+                        <li class="page-item">
+                            <a class="page-link" href="/{{ page_name }}{{ page_number if page_number > 1 else '' }}.html">{{ page_number }}</a>
+                        </li>
+{%       endif %}
+{%     endfor %}
+{%     if articles_page.has_next() %}
+                        <li class="page-item">
+                            <a class="page-link" aria-label="Next" href="/{{ page_name }}{{ articles_page.next_page_number() }}.html">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Siguiente</span>
+                            </a>
+                        </li>
+{%     endif %}
+                    </ul>
+                </nav>
+{%   endif%}
+            </div>
+        </section>
+{% endif %}
+    </main>
+{% endblock %}

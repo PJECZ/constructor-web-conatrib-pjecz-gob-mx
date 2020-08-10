@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Pelican Static Site Generator, Powered by Python">
+{% block meta_tags %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ SITEURL }}/favicon.ico">
+    <link rel="icon" href="{{ SITEURL }}/theme/images/icon-hires.png" sizes="192x192">
+    <link rel="icon" href="{{ SITEURL }}/theme/images/icon-normal.png" sizes="128x128">
+    <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/images/apple-touch-icon-76x76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/images/apple-touch-icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/images/apple-touch-icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/images/apple-touch-icon-180x180.png" sizes="180x180">
+{% if FEED_ALL_RSS %}
+    <link rel="alternate" href="{{ SITEURL }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" title="{{ SITENAME }} Full RSS Feed" />
+{% endif %}
+    <!-- Bootstrap -->
+	<link rel="stylesheet" href="{{ SITEURL }}/theme/vendor/bootstrap/css/bootstrap.min.css">
+    <link id="tema" rel="stylesheet" href="{{ SITEURL }}/theme/css/pjecz-2020-04-claro.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,300;1,700&family=Saira+Condensed:wght@400;700&family=Saira:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <script src="https://use.fontawesome.com/af111b85f5.js"></script>
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+{% if USE_REMOTE_SERVICES %}
+{%     include 'google-analytics.html' %}
+{% endif %}
+</head>
+<body>
+{% include 'navegacion.html' %}
+{% block header %}{% endblock %}
+{% block content %}{% endblock %}
+{% include 'footer.html' %}
+    <!-- JavaScripts Bootstrap -->
+	<script src="{{ SITEURL }}/theme/vendor/jquery/jquery.min.js"></script>
+	<script src="{{ SITEURL }}/theme/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ SITEURL }}/theme/vendor/holder/holder.min.js"></script>
+    <!-- JavaScripts DataTables -->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <!-- JavaScripts propios -->
+    <script src="{{ SITEURL }}/theme/js/cambiar-tablas.js"></script>
+    <script src="{{ SITEURL }}/theme/js/cambiar-tema.js"></script>
+{% if page %}
+    {% if page.javascripts %}
+        {% for javascript in page.javascripts %}
+    {{ javascript }}
+        {% endfor %}
+    {% endif %}
+{% endif %}
+</body>
+</html>
